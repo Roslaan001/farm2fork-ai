@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Farm2Fork AI</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; }
+        textarea { width: 100%; height: 300px; }
+    </style>
+</head>
+<body>
+    <h1>🌾 Farm2Fork AI</h1>
+    <p>Enter the name of your farm produce to get processing, packaging, and market advice.</p>
+    
+    <form method="POST">
+        <input type="text" name="crop" placeholder="e.g. Tomatoes, Plantain" required />
+        <button type="submit">Get Advice</button>
+    </form>
+
+    {% if advice %}
+        <h3>📋 AI Advice:</h3>
+        <textarea readonly>{{ advice }}</textarea>
+    {% endif %}
+</body>
+</html>
+
+{% block content %}
+    <h1>🌾 Farm2Fork AI</h1>
+    <p>Enter the name of your farm produce to get processing, packaging, and market advice.</p>
+    
+    <form method="POST">
+        <input type="text" name="crop" placeholder="e.g. Tomatoes, Plantain" required />
+        <button type="submit">Get Advice</button>
+    </form>
+
+    {% if advice %}
+        <h3>📋 AI Advice:</h3>
+        <textarea readonly>{{ advice }}</textarea>
+    {% endif %}
+{% endblock %}
