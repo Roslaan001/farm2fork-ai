@@ -16,28 +16,40 @@ def get_farm2fork_advice(crop_name):
 
     A user entered: "{crop_name}"
 
-    Your job is to help farmers and agropreneurs.
+    🔍 First: Check if this is a valid farm produce commonly found in Nigeria.
 
-    🔎 First: Determine if the input is a real **farm produce** — a crop, livestock, or agricultural product grown or used in Nigeria.
+    You MUST consider it valid if it's in this list of Nigerian farm products (crops, fruits, vegetables, etc.):
 
-    - If it's clearly NOT a valid farm produce (e.g. car, aeroplane, computer), respond with:
-    "❌ '{crop_name}' is not a recognized farm produce. Please enter something like cassava, maize, tomatoes, or catfish."
+    - **Cereals/Grains**: maize, rice, millet, sorghum, guinea corn
+    - **Tubers**: yam, cassava, potato, sweet potato
+    - **Legumes**: beans, soybeans, groundnut, bambara nut
+    - **Vegetables**: okra, ugu (fluted pumpkin), bitter leaf, waterleaf, spinach, ewedu, garden egg
+    - **Fruits**: mango, orange, cashew, guava, pineapple, banana, plantain, pawpaw, watermelon, coconut
+    - **Spices/Roots**: ginger, garlic, turmeric
+    - **Oil-producing**: oil palm, groundnut, coconut
+    - **Others**: cocoa, kolanut, sugarcane, sesame, cotton, egusi (melon), tigernut
 
-    ✅ If it's valid, provide the following advice in bullet points:
+    ❌ If it is clearly **NOT** a farm produce (e.g. phone, laptop, aeroplane), respond with:
+    "❌ '{crop_name}' is not a recognized farm produce. Please enter something like cassava, maize, tomatoes, catfish, or oranges."
 
-    1. Best time to plant {crop_name} in Nigeria (seasonal weather)
-    2. Best time to harvest {crop_name}
-    3. Best time to sell {crop_name} (when market demand is high)
-    4. Best regions or states in Nigeria to grow {crop_name}
+    ✅ If it is valid, provide the following response:
+
+    - Format your response using *numbered bullet points (1 to 9)* and make it bold
+    - Bold the section titles (e.g. 1. Best time to plant...)
+    - DO NOT bold the explanations
+    - Keep it clear, practical, and helpful for Nigerian farmers
+    
+
+    1. Best time to plant {crop_name} according to Nigeria weather
+    2. Best time to harvest {crop_name} according to Nigeria weather
+    3. Best time to sell {crop_name} according to Nigeria weather
+    4. Best region to plant {crop_name} in Nigeria
     5. How to process it into value-added products
-    6. Short-term and long-term storage tips
-    7. Packaging advice to improve appeal or shelf-life
-    8. Suggested platforms or markets to sell it
-    9. A catchy Nigerian business name idea related to {crop_name}
-
-    Respond clearly in bullet points only.
+    6. Storage tips (short-term and long-term)
+    7. Packaging advice
+    8. Suggested platforms or locations to sell
+    9. A catchy Nigerian business name for the product
     """
-
 
     response = client.chat.completions.create(
         model="farmgpt",
@@ -45,4 +57,7 @@ def get_farm2fork_advice(crop_name):
         temperature=0.7
     )
 
-    return response.choices[0].message.content
+    # return response.choices[0].message.content
+    raw = response.choices[0].message.content
+    cleaned = "\n".join([line.strip() for line in raw.split('\n') if line.strip()])
+    return cleaned

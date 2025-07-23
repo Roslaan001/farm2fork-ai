@@ -11,7 +11,6 @@
   <div class="bg-white p-8 rounded-2xl shadow-lg max-w-xl w-full text-center">
     <h1 class="text-3xl font-bold text-green-700 mb-4">🌾 Farm2Fork AI</h1>
     <p class="text-gray-600 mb-6">Get smart processing and market advice for any farm produce</p>
-    <p class="text-gray-600 mb-6">An AI-powered assistant for Nigerian farmers and food entrepreneurs</p>
 
     <form method="POST" class="flex flex-col gap-4">
       <input
@@ -25,27 +24,34 @@
         type="submit"
         class="bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition duration-200"
       >
-        Get Response
+        Get AI Advice
       </button>
     </form>
 
     {% if advice %}
-      <div class="mt-8 text-left">
-        <h2 class="text-xl font-semibold text-green-700 mb-2">📋 AI Response:</h2>
-        <div class="bg-gray-100 p-4 rounded-lg text-sm text-gray-800 space-y-3">
-          {% for line in advice.split('\n') %}
-            {% if line.strip() %}
-              {% set trimmed_line = line.strip() %}
-              {% if trimmed_line and (trimmed_line[0].isdigit() and '.' in trimmed_line[:4]) %}
-                <div class="text-lg font-bold text-green-700 mt-4 mb-2">{{ trimmed_line }}</div>
-              {% else %}
-                <div class="ml-4 text-gray-700">{{ trimmed_line }}</div>
-              {% endif %}
-            {% endif %}
-          {% endfor %}
-        </div>
-      </div>
-    {% endif %}
+  <div class="mt-8 text-left">
+    <h2 class="text-xl font-semibold text-green-700 mb-2">📋 AI Response:</h2>
+    <div class="bg-gray-100 p-4 rounded-lg text-sm text-gray-800 leading-relaxed space-y-1">
+      {% for line in advice.split('\n') %}
+        {% set trimmed = line.strip() %}
+        {% if trimmed %}
+          {% if trimmed.startswith("✅") or trimmed.startswith("❌") %}
+            <p class="font-semibold text-red-600">{{ trimmed }}</p>
+          {% elif trimmed[0].isdigit() and '.' in trimmed[:3] and ':' in trimmed %}
+            {% set parts = trimmed.split(':', 1) %}
+            <p>
+              <span class="font-semibold text-red-600">{{ parts[0] }}:</span>
+              <span>{{ parts[1].strip() }}</span>
+            </p>
+          {% else %}
+            <p class="ml-4">{{ trimmed }}</p>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}
+
   </div>
 
 </body>
