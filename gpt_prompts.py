@@ -12,23 +12,31 @@ api_key = os.getenv("AZURE_OPENAI_KEY")
 
 def get_farm2fork_advice(crop_name):
     prompt = f"""
-    You are an expert in Nigerian agriculture, processing, and market advisory.
-    The user has entered: '{crop_name}'
-    Your first task is to verify whether this input is a real farm produce — such as a crop, livestock, or commonly cultivated agricultural product in Nigeria.
-    - If the input is NOT a valid farm produce, politely respond with:
-    ❌ 'This does not seem to be a valid farm produce or crop. Please enter something like cassava, maize, plantain, or tomatoes.'
-    - If it is valid, provide detailed guidance with the following sections:
-    1. ✅ Best time to **plant** {crop_name} in Nigeria (based on weather/seasons)
-    2. ✅ Best time to **harvest** {crop_name}
-    3. ✅ Best time to **sell** {crop_name} for market value
-    4. ✅ Best region/state to grow {crop_name} in Nigeria
-    5. 🏭 How to process {crop_name} into value-added products
-    6. 🧊 Storage tips — both short-term and long-term
-    7. 📦 Packaging advice to improve shelf-life and appeal
-    8. 📍 Suggested platforms or market locations to sell
-    9. 💡 A catchy Nigerian business name suggestion related to {crop_name}
-    Respond clearly and in bullet points only.
-"""
+    You are an expert in Nigerian agriculture, crop processing, and market advisory.
+
+    A user entered: "{crop_name}"
+
+    Your job is to help farmers and agropreneurs.
+
+    🔎 First: Determine if the input is a real **farm produce** — a crop, livestock, or agricultural product grown or used in Nigeria.
+
+    - If it's clearly NOT a valid farm produce (e.g. car, aeroplane, computer), respond with:
+    "❌ '{crop_name}' is not a recognized farm produce. Please enter something like cassava, maize, tomatoes, or catfish."
+
+    ✅ If it's valid, provide the following advice in bullet points:
+
+    1. Best time to plant {crop_name} in Nigeria (seasonal weather)
+    2. Best time to harvest {crop_name}
+    3. Best time to sell {crop_name} (when market demand is high)
+    4. Best regions or states in Nigeria to grow {crop_name}
+    5. How to process it into value-added products
+    6. Short-term and long-term storage tips
+    7. Packaging advice to improve appeal or shelf-life
+    8. Suggested platforms or markets to sell it
+    9. A catchy Nigerian business name idea related to {crop_name}
+
+    Respond clearly in bullet points only.
+    """
 
 
     response = client.chat.completions.create(
